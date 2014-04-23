@@ -1,3 +1,4 @@
+from configparser import ConfigParser
 import sys
 
 __author__ = 'Kevin'
@@ -82,14 +83,25 @@ class MongoDB:
         self.client.close()
 
     def setSysParam(self):
+        config = ConfigParser()
+        config.read('db.ini')
+
+        USIT_PATH = config.get('USIT', 'path')
+        cjpeg_PATH = config.get('cjpeg', 'path')
+        djpeg_PATH = config.get('djpeg', 'path')
+        opj_compress_PATH = config.get('opj_compress', 'path')
+        opj_decompress_PATH = config.get('opj_decompress', 'path')
+        JxrEncApp_PATH = config.get('JxrEncApp', 'path')
+        JxrDecApp_PATH = config.get('JxrDecApp', 'path')
+
         self.db["sys_param"].remove()
-        self.db["sys_param"].insert({"program": "USIT", "path": "/home/kevin/Programme/USITv1.0.3/"})
-        self.db["sys_param"].insert({"program": "cjpeg", "path": "/usr/bin/"})
-        self.db["sys_param"].insert({"program": "djpeg", "path": "/usr/bin/"})
-        self.db["sys_param"].insert({"program": "opj_compress", "path": "/usr/local/bin/"})
-        self.db["sys_param"].insert({"program": "opj_decompress", "path": "/usr/local/bin/"})
-        self.db["sys_param"].insert({"program": "JxrEncApp", "path": "/usr/bin/"})
-        self.db["sys_param"].insert({"program": "JxrDecApp", "path": "/usr/bin/"})
+        self.db["sys_param"].insert({"program": "USIT", "path": USIT_PATH})
+        self.db["sys_param"].insert({"program": "cjpeg", "path": cjpeg_PATH})
+        self.db["sys_param"].insert({"program": "djpeg", "path": djpeg_PATH})
+        self.db["sys_param"].insert({"program": "opj_compress", "path": opj_compress_PATH})
+        self.db["sys_param"].insert({"program": "opj_decompress", "path": opj_decompress_PATH})
+        self.db["sys_param"].insert({"program": "JxrEncApp", "path": JxrEncApp_PATH})
+        self.db["sys_param"].insert({"program": "JxrDecApp", "path": JxrDecApp_PATH})
 
 
 def main():
